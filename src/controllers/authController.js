@@ -1,0 +1,206 @@
+import User from '../models/userSchema.js';
+import responseHandler from '../utils/responseHandle.js';
+import formatMongoError from '../utils/formantMongoErrors.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import { sendOtpEmail as sendEmailOTP } from '../utils/sendOtp.js';
+
+const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
+
+const saltRounds = 12;
+
+// token generator
+const tokenGen = (user) => {
+    return jwt.sign({
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email
+    }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+};
+
+async function signupController(req, res) {
+    try {
+        const { firstName, lastName, email, password } = req.body;
+
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return responseHandler(res, 400, false, 'Email already registered');
+        }
+
+        const hash = await bcrypt.hash(password, saltRounds);
+        const otp = Math.floor(100000 + Math.random() * 900000);
+        const otpExpiry = Date.now() + 5 * 60 * 1000;
+
+        // 1. Create and Save User FIRST
+        const user = new User({
+            firstName,
+            lastName,
+            email,
+            password: hash,
+            otp,
+            otpExpiry,
+            isVerified: false
+        });
+        await user.save();
+
+        // 2. Try to send email
+        try {
+            await sendEmailOTP(firstName + " " + lastName, email, otp);
+            console.log(email);
+            
+            responseHandler(res, 201, true, `OTP sent to email ${email}. Verify to complete signup`);
+        } catch (emailError) {
+            console.error("Email Sending Error:", emailError);
+            // Optionally: await User.deleteOne({ _id: user._id }); // Rollback if email fails
+            responseHandler(res, 500, false, `User created but failed to send OTP: ${emailError.message || emailError}`);
+        }
+
+    } catch (error) {
+        let formattedError = formatMongoError(error);
+        responseHandler(res, 400, false, formattedError);
+    }
+}
+
+/* =========================
+   VERIFY OTP
+========================= */
+async function verifyOtpController(req, res) {
+    try {
+        const { email, otp } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return responseHandler(res, 404, false, 'User not found');
+        }
+
+        if (user.isVerified) {
+            return responseHandler(res, 200, true, 'User already verified');
+        }
+
+        if (user.otp !== Number(otp)) {
+            return responseHandler(res, 400, false, 'Invalid OTP');
+        }
+
+        if (Date.now() > user.otpExpiry) {
+            return responseHandler(res, 400, false, 'OTP expired');
+        }
+
+        user.isVerified = true;
+        user.otp = null;
+        user.otpExpiry = null;
+        user.otpResendCount = 0; // Reset count on success
+
+        await user.save();
+
+        responseHandler(res, 200, true, 'Account verified successfully');
+
+    } catch (error) {
+        responseHandler(res, 500, false, 'OTP verification failed');
+    }
+}
+/* =========================
+   LOGIN
+========================= */
+async function loginController(req, res) {
+    const { email, password } = req.body;
+
+    try {
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return responseHandler(res, 404, false, 'Email is not registered');
+        }
+
+
+        if (!user.isVerified) {
+
+            const otp = Math.floor(100000 + Math.random() * 900000);
+            const otpExpiry = Date.now() + 5 * 60 * 1000;
+
+            user.otp = otp;
+            user.otpExpiry = otpExpiry;
+            await user.save();
+
+            await sendEmailOTP(`${user.firstName} ${user.lastName}`, email, otp);
+            return responseHandler(res, 401, false, 'Please verify your email first');
+
+        }
+
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordMatch) {
+            return responseHandler(res, 401, false, 'Incorrect password');
+        }
+
+        const { password: _, __v, otp, otpExpiry, ...safeUser } = user._doc;
+
+        const token = `Bearer ${tokenGen(safeUser)}`;
+        console.log(token);
+        
+
+        responseHandler(res, 200, true, 'Login successful', safeUser, token);
+
+    } catch (error) {
+        responseHandler(res, 500, false, 'Login failed Please try again!');
+    }
+}
+
+
+/* =========================
+   RESEND OTP
+========================= */
+async function resendOtpController(req, res) {
+    try {
+        const { email } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return responseHandler(res, 404, false, 'User not found');
+        }
+
+        if (user.isVerified) {
+            return responseHandler(res, 400, false, 'Account already verified');
+        }
+
+        // Limit resend to 3 times
+        if (user.otpResendCount >= 3) {
+            return responseHandler(res, 429, false, 'Maximum OTP resend limit reached. Please try after some time or contact support.');
+        }
+
+        const otp = Math.floor(100000 + Math.random() * 900000);
+        const otpExpiry = Date.now() + 5 * 60 * 1000; // 5 minutes
+
+        user.otp = otp;
+        user.otpExpiry = otpExpiry;
+        user.otpResendCount += 1;
+        user.lastOtpResend = Date.now();
+
+        await user.save();
+
+        try {
+            await sendEmailOTP(`${user.firstName} ${user.lastName}`, email, otp);
+            responseHandler(res, 200, true, `New OTP sent. Attempt ${user.otpResendCount} of 3`);
+        } catch (emailError) {
+            console.error("Resend Email Error:", emailError);
+            responseHandler(res, 500, false, 'Failed to send OTP email');
+        }
+
+    } catch (error) {
+        responseHandler(res, 500, false, 'Failed to resend OTP');
+    }
+}
+
+
+/* =========================
+   EXPORTS
+========================= */
+export {
+    signupController,
+    loginController,
+    verifyOtpController,
+    resendOtpController
+};
