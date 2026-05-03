@@ -30,7 +30,7 @@ let quizCards = {
                 {
                     order: 3,
                     question: "Which HTML element is used to define the document title?",
-                    options: ["<head>", "<meta>", "<title>", "<header>"],
+                    options: ["<code><head></code>", "<code><meta></code>", "<code><title></code>", "<code><header></code>"],
                     correct: 2,
                     time: 30
 
@@ -38,7 +38,7 @@ let quizCards = {
                 {
                     order: 4,
                     question: "What is the correct HTML element for inserting a line break?",
-                    options: ["<break>", "<lb>", "<br>", "<hr>"],
+                    options: ["<code><break></code>", "<code><lb></code>", "<code><br></code>", "<code><hr></code>"],
                     correct: 2,
                     time: 30
 
@@ -46,7 +46,7 @@ let quizCards = {
                 {
                     order: 5,
                     question: "Which character is used to indicate an end(closing) tag?",
-                    options: ["<", "/", "*", "^"],
+                    options: ["<code><</code>", "/", "*", "^"],
                     correct: 1,
                     time: 30
 
@@ -54,7 +54,7 @@ let quizCards = {
                 {
                     order: 6,
                     question: "How can you make a numbered list in HTML?",
-                    options: ["<ul>", "<list>", "<ol>", "<dl>"],
+                    options: ["<code><ul></code>", "<code><list></code>", "<code><ol></code>", "<code><dl></code>"],
                     correct: 2,
                     time: 30
 
@@ -62,7 +62,7 @@ let quizCards = {
                 {
                     order: 7,
                     question: "Which HTML element is used to define an unordered list?",
-                    options: ["<ul>", "<ol>", "<list>", "<dl>"],
+                    options: ["<code><ul></code>", "<code><ol></code>", "<code><list></code>", "<code><dl></code>"],
                     correct: 0,
                     time: 30
 
@@ -70,7 +70,7 @@ let quizCards = {
                 {
                     order: 8,
                     question: "What is the correct HTML for making a checkbox?",
-                    options: ["<input type='check'>", "<checkbox>", "<input type='checkbox'>", "<check>"],
+                    options: ["<code><input type='check'></code>", "<code><checkbox></code>", "<code><input type='checkbox'></code>", "<code><check></code>"],
                     correct: 2,
                     time: 30
 
@@ -78,7 +78,7 @@ let quizCards = {
                 {
                     order: 9,
                     question: "Which HTML element is used to specify a footer for a document or section?",
-                    options: ["<bottom>", "<section>", "<footer>", "<aside>"],
+                    options: ["<code><bottom></code>", "<code><section></code>", "<code><footer></code>", "<code><aside></code>"],
                     correct: 2,
                     time: 30
 
@@ -86,7 +86,7 @@ let quizCards = {
                 {
                     order: 10,
                     question: "What is the correct HTML element for playing video files?",
-                    options: ["<media>", "<video>", "<movie>", "<play>"],
+                    options: ["<code><media></code>", "<code><video></code>", "<code><movie></code>", "<code><play></code>"],
                     correct: 1,
                     time: 30
 
@@ -104,7 +104,7 @@ let quizCards = {
                     {
                         order: 1,
                         question: "Which HTML element is used to create a form?",
-                        options: ["<input>", "<form>", "<fieldset>", "<search>"],
+                        options: ["<code><input></code>", "<code><form></code>", "<code><fieldset></code>", "<code><search></code>"],
                         correct: 1,
                         time: 30
                     },
@@ -125,7 +125,7 @@ let quizCards = {
                     {
                         order: 4,
                         question: "How do you create a multi-line text input field?",
-                        options: ["<input type='textarea'>", "<textblock>", "<textarea>", "<input type='textbox'>"],
+                        options: ["<code><input type='textarea'></code>", "<code><textblock></code>", "<code><textarea></code>", "<code><input type='textbox'></code>"],
                         correct: 2,
                         time: 30
                     },
@@ -139,7 +139,7 @@ let quizCards = {
                     {
                         order: 6,
                         question: "How do you group related data in a form?",
-                        options: ["<group>", "<section>", "<fieldset>", "<area>"],
+                        options: ["<code><group></code>", "<code><section></code>", "<code><fieldset></code>", "<code><area></code>"],
                         correct: 2,
                         time: 30
                     },
@@ -160,7 +160,7 @@ let quizCards = {
                     {
                         order: 9,
                         question: "What is the purpose of the <label> element?",
-                        options: ["To style the text", "To define a clickable caption for an input", "To create a tooltip", "To validate the input"],
+                        options: ["To style the text", "To define a clickable caption for an input field", "To create a tooltip", "To validate the input"],
                         correct: 1,
                         time: 30
                     },
@@ -184,84 +184,84 @@ let quizCards = {
                     {
                         order: 1,
                         question: "Which HTML element is used to define the main navigation block?",
-                        options: ["<navigation>", "<nav>", "<menu>", "<links>"],
+                        options: ["<code><navigation></code>", "<code><nav></code>", "<code><menu></code>", "<code><links></code>"],
                         correct: 1,
                         time: 30
                     },
                     {
                         order: 2,
                         question: "Which element represents a self-contained content like a blog post or news article?",
-                        options: ["<section>", "<article>", "<div>", "<aside>"],
+                        options: ["<code><section></code>", "<code><article></code>", "<code><div></code>", "<code><aside></code>"],
                         correct: 1,
                         time: 30
                     },
                     {
                         order: 3,
                         question: "Which tag should be used for content that is tangentially related to the content around it (like a sidebar)?",
-                        options: ["<aside>", "<sidebar>", "<related>", "<section>"],
+                        options: ["<code><aside></code>", "<code><sidebar></code>", "<code><related></code>", "<code><section></code>"],
                         correct: 0,
                         time: 30
                     },
                     {
                         order: 4,
                         question: "Which element defines the footer for a document or a section?",
-                        options: ["<bottom>", "<end>", "<footer>", "<base>"],
+                        options: ["<code><bottom></code>", "<code><end></code>", "<code><footer></code>", "<code><base></code>"],
                         correct: 2,
                         time: 30
                     },
                     {
                         order: 5,
                         question: "What is the correct semantic element for a header of a document or section?",
-                        options: ["<head>", "<top>", "<header>", "<heading>"],
+                        options: ["<code><head></code>", "<code><top></code>", "<code><header></code>", "<code><heading></code>"],
                         correct: 2,
                         time: 30
                     },
                     {
                         order: 6,
                         question: "Which element is used to group a set of <h1>-<h6> elements when they have multiple levels?",
-                        options: ["<hgroup>", "<header>", "<titles>", "<headings>"],
+                        options: ["<code><hgroup></code>", "<code><header></code>", "<code><titles></code>", "<code><headings></code>"],
                         correct: 0,
                         time: 30
                     },
                     {
                         order: 7,
                         question: "Which element is used to represent the main content of the <body>?",
-                        options: ["<content>", "<main>", "<primary>", "<section>"],
+                        options: ["<code><content></code>", "<code><main></code>", "<code><primary></code>", "<code><section></code>"],
                         correct: 1,
                         time: 30
                     },
                     {
                         order: 8,
                         question: "Which tag is used to specify a caption for a <figure> element?",
-                        options: ["<figcaption>", "<caption>", "<label>", "<legend>"],
+                        options: ["<code><figcaption></code>", "<code><caption></code>", "<code><label></code>", "<code><legend></code>"],
                         correct: 0,
                         time: 30
                     },
                     {
                         order: 9,
                         question: "Which element represents a date and/or time?",
-                        options: ["<datetime>", "<time>", "<calendar>", "<date>"],
+                        options: ["<code><datetime></code>", "<code><time></code>", "<code><calendar></code>", "<code><date></code>"],
                         correct: 1,
                         time: 30
                     },
                     {
                         order: 10,
                         question: "Which element is used to mark a section of text that is quoted from another source?",
-                        options: ["<quote>", "<cite>", "<blockquote>", "<q>"],
+                        options: ["<code><quote></code>", "<code><cite></code>", "<code><blockquote></code>", "<code><q></code>"],
                         correct: 2,
                         time: 30
                     },
                     {
                         order: 11,
                         question: "Which semantic element is used to highlight parts of a text because of their relevance in a specific context?",
-                        options: ["<important>", "<bold>", "<mark>", "<highlight>"],
+                        options: ["<code><important></code>", "<code><bold></code>", "<code><mark></code>", "<code><highlight></code>"],
                         correct: 2,
                         time: 30
                     },
                     {
                         order: 12,
                         question: "Which element acts as a container for details that the user can open and close on demand?",
-                        options: ["<accordion>", "<summary>", "<details>", "<toggle>"],
+                        options: ["<code><accordion></code>", "<code><summary></code>", "<code><details></code>", "<code><toggle></code>"],
                         correct: 2,
                         time: 30
                     }
@@ -286,14 +286,14 @@ let quizCards = {
                     {
                         order: 2,
                         question: "Where in an HTML document is the correct place to refer to an external style sheet?",
-                        options: ["In the <body> section", "At the end of the document", "In the <head> section", "After the <html> tag"],
+                        options: ["<code>In the <body> section</code>", "<code>At the end of the document</code>", "<code>In the <head> section</code>", "<code>After the <html> tag</code>"],
                         correct: 2,
                         time: 30
                     },
                     {
                         order: 3,
                         question: "Which HTML tag is used to define an internal style sheet?",
-                        options: ["<css>", "<script>", "<style>", "<link>"],
+                        options: ["<code><css></code>", "<code><script></code>", "<code><style></code>", "<code><link></code>"],
                         correct: 2,
                         time: 30
                     },
@@ -560,14 +560,14 @@ let quizCards = {
                     {
                         order: 1,
                         question: "Inside which HTML element do we put the JavaScript?",
-                        options: ["<scripting>", "<js>", "<javascript>", "<script>"],
+                        options: ["<code><scripting></code>", "<code><js></code>", "<code><javascript></code>", "<code><script></code>"],
                         correct: 3,
                         time: 30
                     },
                     {
                         order: 2,
                         question: "What is the correct syntax for referring to an external script called 'xxx.js'?",
-                        options: ["<script href='xxx.js'>", "<script name='xxx.js'>", "<script src='xxx.js'>", "<script file='xxx.js'>"],
+                        options: ["<code><script src='xxx.js'></code>", "<code><script href='xxx.js'></code>", "<code><script name='xxx.js'></code>", "<code><script file='xxx.js'></code>"],
                         correct: 2,
                         time: 30
                     },
@@ -1004,7 +1004,7 @@ let quizCards = {
             { 
                 order: 2, 
                 question: "How do you embed a JavaScript expression inside JSX?", 
-                options: ["Using ( )", "Using [ ]", "Using { }", "Using < >"], 
+                options: ["Using <code>( )</code>", "Using <code>[ ]</code>", "Using <code>{ }</code>", "Using <code>< ></code>"], 
                 correct: 2, 
                 time: 30 
             },
@@ -1032,7 +1032,7 @@ let quizCards = {
             { 
                 order: 6, 
                 question: "What can you use to group multiple elements in JSX without adding extra nodes to the DOM?", 
-                options: ["<div>", "<section>", "<Fragment> or <>", "<span>"], 
+                options: ["<code><div></code>", "<code><section></code>", "<code><Fragment></code> or <code><></code>", "<code><span></code>"], 
                 correct: 2, 
                 time: 30 
             },
@@ -1090,7 +1090,7 @@ let quizCards = {
             { 
                 order: 5, 
                 question: "How do you pass a prop named 'user' with the value 'Alex' to a Profile component?", 
-                options: ["<Profile user='Alex' />", "<Profile val='Alex' />", "<Profile>Alex</Profile>", "<Profile Alex />"], 
+                options: ["<code><Profile user='Alex' /></code>", "<code><Profile val='Alex' /></code>", "<code><Profile>Alex</Profile></code>", "<code><Profile Alex /></code>"], 
                 correct: 0, 
                 time: 30 
             },
@@ -2117,7 +2117,7 @@ let quizCards = {
             { 
                 order: 7, 
                 question: "Which command would you use to see the individual layers and size of a specific image?", 
-                options: ["docker list", "docker history <image_name>", "docker inspect", "docker layers"], 
+                options: ["<code>docker list</code>", "<code>docker history <image_name></code>", "<code>docker inspect</code>", "<code>docker layers</code>"], 
                 correct: 1, 
                 time: 30 
             },
