@@ -18,6 +18,10 @@ const ProgressSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    answers: {
+        type: [Number], // Array of selected option indices
+        default: []
+    },
     isCompleted: {
         type: Boolean,
         default: true

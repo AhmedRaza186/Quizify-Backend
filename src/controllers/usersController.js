@@ -35,7 +35,7 @@ async function getAllUsersController(req, res) {
         if (sort) {
             if (sort === 'newest') mongoQuery = mongoQuery.sort({ createdAt: -1 });
             if (sort === 'oldest') mongoQuery = mongoQuery.sort({ createdAt: 1 });
-            // if (sort === 'age') mongoQuery = mongoQuery.sort({ age: 1 });
+            if (sort === 'rank') mongoQuery = mongoQuery.sort({ progress: -1, quizPlayed: -1 });
         }
 
         const users = await mongoQuery;

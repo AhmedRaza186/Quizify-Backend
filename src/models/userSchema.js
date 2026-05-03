@@ -46,13 +46,31 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    bestScore: {
+        type: Number,
+        default: 0
+    },
     quizPlayed: {
         type: Number,
         default: 0
     },
+    quizHistory: [{
+        quizName: String,
+        percentage: Number,
+        category: String,
+        date: { type: Date, default: Date.now }
+    }],
+    categoryStats: {
+        type: Map,
+        of: {
+            averagePercentage: Number,
+            quizzesPlayed: Number
+        },
+        default: {}
+    },
     createdAt: {
         type: Date,
-        default: Date.now()
+        default: Date.now
     }
 });
 

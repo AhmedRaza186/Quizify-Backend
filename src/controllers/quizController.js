@@ -49,25 +49,48 @@ export const getQuizzesBySubCategory = async (req, res) => {
 // Save user progress for a quiz
 export const saveProgress = async (req, res) => {
     try {
-        const { subCategory, quizId, percentage } = req.body;
+        const { subCategory, quizId, percentage, answers } = req.body;
         const userId = req.user._id;
 
         const progress = await Progress.findOneAndUpdate(
             { userId, subCategory, quizId },
-            { percentage, isCompleted: true, completedAt: new Date() },
+            { percentage, answers, isCompleted: true, completedAt: new Date() },
             { upsert: true, new: true }
         );
 
-        // Update user's aggregate stats
+        // Update user's aggregate stats and history
         const allProgress = await Progress.find({ userId });
         const quizPlayed = allProgress.length;
         const totalPercentage = allProgress.reduce((sum, p) => sum + p.percentage, 0);
         const avgProgress = Math.round(totalPercentage / quizPlayed);
 
+        // Update category-wise stats
+        const categoryResults = allProgress.filter(p => p.subCategory === subCategory);
+        const catAvg = Math.round(categoryResults.reduce((sum, p) => sum + p.percentage, 0) / categoryResults.length);
+
         await User.findByIdAndUpdate(userId, {
             $set: { 
                 'progress': avgProgress,
-                'quizPlayed': quizPlayed
+                'quizPlayed': quizPlayed,
+                [`categoryStats.${subCategory}`]: {
+                    averagePercentage: catAvg,
+                    quizzesPlayed: categoryResults.length
+                }
+            },
+            $push: {
+                quizHistory: {
+                    $each: [{
+                        quizName: req.body.quizName || subCategory,
+                        percentage: percentage,
+                        category: subCategory,
+                        date: new Date()
+                    }],
+                    $slice: -20, // Keep last 20 attempts for history
+                    $position: 0  // Most recent first
+                }
+            },
+            $max: {
+                bestScore: percentage
             }
         });
 
@@ -93,6 +116,7 @@ export const getProgress = async (req, res) => {
         progressList.forEach(p => {
             progressMap[p.quizId] = {
                 percentage: p.percentage,
+                answers: p.answers,
                 isCompleted: p.isCompleted,
                 completedAt: p.completedAt
             };
