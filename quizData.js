@@ -6562,7 +6562,7 @@ const quizData = {
         }
     ]
 };
-console.log(quizData.categories[0].topics.HTML[0].questionsDetails.questions);
+
 
 
 export { quizData }
