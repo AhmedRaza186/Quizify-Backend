@@ -53,7 +53,30 @@ async function getAllUsersController(req, res) {
         responseHandler(res, 500, false, `Failed to retrieve users: ${error.message || error}`);
     }
 }
+async function getSpecificUserController(req,res) {
+    console.log("getSpecificUserController called");
+    
+    try {
+        const { id } = req.params;
+        console.log("req.params",req.params);
+        
+        if(!id){
+            responseHandler(res, 400, false, "No user ID provided");
+            return;
+        }
+        const user = await User.findOne({ _id: id });
+        if (!user) {
+            responseHandler(res, 200, true, 'User not found');
+            return;
+        }
+        console.log(user._doc);
 
+        responseHandler(res, 200, true, 'Specific user retrieved successfully', user);
+    } catch (error) {
+        console.log(error);
+        responseHandler(res, 500, false, 'Failed to retrieve user');
+    }
+}
 async function getLoginedUserController(req, res) {
     try {
     let token = req.headers.authorization;
@@ -158,6 +181,7 @@ async function deleteUserController(req, res) {
 
 export {
     getAllUsersController,
+    getSpecificUserController,
     getLoginedUserController,
     updateUserController,
     deleteUserController
