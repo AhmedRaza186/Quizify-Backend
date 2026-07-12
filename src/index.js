@@ -19,10 +19,10 @@ dotenv.config();
 if (!process.env.MONGO_URI) {
     console.error("CRITICAL ERROR: MONGO_URI is not defined in environment variables!");
 }
-
+console.log(process.env.MONGO_URI);
 connectDB();
 
-// 2. Allow your Netlify site to talk to your backend
+
 app.use(cors());
 
 app.use(express.json());
